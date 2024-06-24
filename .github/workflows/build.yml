@@ -24,16 +24,14 @@ jobs:
       - name: Install Dependences
         run: |
           brew install libpcap
-          # go mod vendor
-#          git submodule update --init --recursive --remote
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
-          args: release -f .github/build/mac.yml --clean
+          args: release -f .github/build/mac.yml --snapshot --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  # https://github.com/marketplace/actions/run-on-architecture#supported-platforms
+
   build-linux:
     runs-on: ubuntu-latest
     steps:
@@ -52,16 +50,13 @@ jobs:
       - name: Install Dependences
         run: |
           sudo apt install -yy libpcap-dev
-          #go mod vendor
         env:
            GOENABLE: 1
-#           CGO_LDFLAGS: "-Wl,-static -L/usr/lib/x86_64-linux-gnu/libpcap.a -lpcap -Wl,-Bdynamic"
-#          git submodule update --init --recursive --remote
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
-          args: release -f .github/build/linux.yml --clean
+          args: release -f .github/build/linux.yml --snapshot --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -84,6 +79,6 @@ jobs:
         uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
-          args: release -f .github/build/windows.yml --clean
+          args: release -f .github/build/windows.yml --snapshot --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
